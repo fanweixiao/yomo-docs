@@ -1,6 +1,6 @@
 ---
-title: 应用场景
-position: 7
+title: 硬件配置
+position: 6
 category: Overview
 ---
 
