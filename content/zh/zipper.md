@@ -4,151 +4,113 @@ position: 3
 category: Overview
 ---
 
-## yomo-zipper 是什么？
+`zipper` 负责连接由 `source` 产生的连续数据流和[流函数 (stream functions)](/stream-fn)，这些流函数对数据流进行操作。
+要为 `zipper` 定义工作流配置 (workflow configuration)，只需要创建一个 `.yaml` 文件 (参见下面的示例)。
 
-`yomo-zipper` 是 YoMo 生态的 `workflow`，您可以使用 `yomo-zipper` 编排 [yomo-flow](/flow) 的执行顺序，以及数据实时计算完之后输出给哪些 [yomo-sink](/sink)。
+YoMo 使用 [QUIC 传输协议](https://en.wikipedia.org/wiki/QUIC)，
+大大提高了数据传输的速度，
+并支持通过 [y3 codec](https://github.com/yomorun/y3-codec-golang) 对不同数据类型的流进行编码/解码。
 
 ![zipper](/zipper/zipper.png)
 
-## yomo-zipper 能做什么？
+## 配置并运行 `zipper`
 
-`yomo-zipper` 接收 [yomo-source](/source) 数据源发送的数据，并将数据传给编排串联好的 [yomo-flow](/flow)，进行实时流式计算。数据经过各个 [yomo-flow](/flow) **串行**计算之后，会**并行**输出给各个 [yomo-sink](/sink)。
+### `workflow.yaml`
 
-`yomo-zipper` 将 YoMo 生态的 `yomo-source`、`yomo-flow` 和 `yomo-sink` 整合在一起，您可以通过配置和运行 `yomo-zipper` 体验 YoMo 全流程的实时流式计算。数据传输全程基于 `QUIC`，并使用 [Y3 Codec](https://github.com/yomorun/y3-codec-golang) 进行高性能编解码。
-
-## 如何配置和运行 yomo-zipper？
-
-### 配置 yomo-zipper
-
-`yomo-zipper` 的配置文件为 `yaml` 文件，您可以配置 `yomo-zipper` 的 `name`、`host` 和 `port`，并添加多个 `yomo-flow` 和 `yomo-sink`。
-
-#### 示例
+您可以在 `.yaml` 文件中为 `zipper` 定义工作流配置。
+例如，这是一个简单的实时噪声监测系统的工作流:
 
 ```yaml
+# zipper/workflow.yaml
 name: Service
 host: localhost
-port: 9999
-flows:
-  - name: Noise Serverless
-    host: localhost
-    port: 4242
-sinks:
-  - name: Mock DB
-    host: localhost
-    port: 4141
+port: 9000
+functions:
+  - name: Noise
+  - name: MockDB
 ```
 
-### 运行 yomo-zipper
+- `name`: `zipper` 的名称。
+- `host` 和 `port`: 定义`zipper` 将监听的 `host:port`。
+- `functions`: 流函数列表。在这个例子中，`Noise` 函数将监控噪音水平的变化，并在达到某个阈值时打印出警告信息。`MockDB` 将处理完的数据保存到数据库中。
 
-#### 1. 安装 CLI
+要了解有关 yaml 的更多信息，可以阅读 [Learn X in Y minutes, where X=yaml](https://learnxinyminutes.com/docs/yaml/)。
+
+### 运行 [示例程序](https://github.com/yomorun/yomo/tree/next/example/basic)
+
+#### 1. 安装 YoMo CLI
+
+请参考 [说明](https://docs.yomo.run/)。
+
+#### 2. 运行 `zipper`
 
 ```bash
-# 请使用 $GOPATH，因为 go 语言需要 plugin 和 main 的高度耦合
-$ echo $GOPATH
+yomo serve -c ./zipper/workflow.yaml
+
+ℹ️   Found 1 stream functions in zipper config
+ℹ️   Stream Function 1: Noise
+ℹ️   Running YoMo Zipper...
 ```
 
-如果未设置 `$GOPATH`，请先看这一节：[设置 $GOPATH 和 $GOBIN](#optional-set-gopath-and-gobin)。
+#### 3. 运行 `stream-fn`
 
 ```bash
-$ GO111MODULE=off go get -u github.com/yomorun/yomo
-$ cd $GOPATH/src/github.com/yomorun/yomo
-$ make install
+yomo run ./stream-fn/app.go -n Noise
+
+ℹ️  YoMo Stream Function file: example/basic/stream-fn/app.go
+⌛  Create YoMo Stream Function instance...
+ℹ️  Starting YoMo Stream Function instance with Name: Noise. Host: localhost. Port: 9000.
+⌛  YoMo Stream Function building...
+✅  Success! YoMo Stream Function build.
+ℹ️  YoMo Stream Function is running...
+2021/05/20 14:10:17 ✅ Connected to zipper localhost:9000
+2021/05/20 14:10:17 Running the Stream Function.
+```
+#### 4. 运行 `stream-fn-db`
+
+```bash
+go run ./stream-fn-db/app.go -n MockDB
+
+2021/05/20 14:10:29 ✅ Connected to zipper localhost:9000
+2021/05/20 14:10:29 Running the Serverless Function.
 ```
 
-![YoMo 教程 1](/tutorial-1.png)
-
-#### 2. 运行 yomo-zipper
-
-以 YoMo 项目的 example 为例：
+#### 5. 运行 `source`
 
 ```bash
-$ yomo wf run example/workflow.yaml
-2021/01/15 16:04:52 Running YoMo workflow...
-2021/01/15 16:04:52 ✅ Listening on 0.0.0.0:9999
+go run ./source/main.go
+
+2021/05/20 14:11:00 Connecting to zipper localhost:9000 ...
+2021/05/20 14:11:00 ✅ Connected to zipper localhost:9000
+2021/05/20 14:11:00 ✅ Emit {99.11785 1621491060031 localhost} to zipper
+2021/05/20 14:11:00 ✅ Emit {145.5075 1621491060131 localhost} to zipper
+2021/05/20 14:11:00 ✅ Emit {118.27067 1621491060233 localhost} to zipper
+2021/05/20 14:11:00 ✅ Emit {56.369446 1621491060335 localhost} to zipper
 ```
 
-运行上述命令之后，YoMo 将会启动 `yomo-zipper`，并监听配置好的端口。
+#### 6. 结果
 
-> **注意：** 您还可以选择通过运行 `yomo wf dev` 启动 yomo-zipper，它将自动使用 CELLA 办公室的真实噪声分贝值作为 `yomo-source`，例如：`yomo wf dev example/workflow.yaml`，您可以忽略第 4 步下载和运行 `yomo-source-example`。
-
-#### 3. 运行 yomo-flow 和 yomo-sink
-
-以下是以 YoMo 项目的 example 为例，运行 `yomo-flow` 和 `yomo-sink`。您也可以修改该步骤为您实际想运行的 `yomo-flow` 和 `yomo-sink`。
-
-运行 `yomo-flow`：
+`stream-fn` (即 `Noise`) 监控噪音水平的变化，并在达到某个阈值时打印出警告消息:
 
 ```bash
-$ yomo run example/flow/app.go
-2021/01/15 16:10:13 Building the Serverless Function File...
-2021/01/15 16:10:21 ✅ Listening on 0.0.0.0:4242
+[localhost] 1621491060839 > value: 15.714272 ⚡️=1ms
+[localhost] 1621491060942 > value: 14.961421 ⚡️=1ms
+[localhost] 1621491061043 > value: 18.712460 ⚡️=1ms
+❗ value: 18.712460 reaches the threshold 16! 𝚫=2.712460
+[localhost] 1621491061146 > value: 1.071311 ⚡️=1ms
+[localhost] 1621491061246 > value: 16.458117 ⚡️=1ms
+❗ value: 16.458117 reaches the threshold 16! 𝚫=0.458117
+🧩 average value in last 10000 ms: 10.918112!
 ```
 
-运行 `yomo-sink`：
+`stream-fn-db` (即 `MockDB`) 将数据保存到 FaunaDB:
 
 ```bash
-$ yomo run example/sink/app.go -p 4141
-2021/01/15 16:13:29 Building the Serverless Function File...
-2021/01/15 16:13:31 ✅ Listening on 0.0.0.0:4141
-```
-
-YoMo 还提供以下几种 `yomo-sink` 的示例，您也可以选择使用以下的 example 体验更贴合真实的场景。
-
-- [yomo-sink-faunadb-example](https://github.com/yomorun/yomo-sink-faunadb-example) 提供将数据保存到 `FaunaDB` 的示例。
-- [yomo-sink-socketio-server-example](https://github.com/yomorun/yomo-sink-socketio-server-example) 提供接收噪声分贝数据并通过 `socket.io server` 提供数据给 `Web` 页面展示的示例。
-- [yomo-sink-socket-io-example](https://github.com/yomorun/yomo-sink-socket-io-example) 提供前端 `React` 页面接收并显示 `socket.io server` 噪声分贝数据的示例。
-
-#### 4. 运行 yomo-source
-
-以 [yomo-source-example](https://github.com/yomorun/yomo-source-example) 为例，运行 `yomo-source` 发送模拟噪声分贝值给 `yomo-zipper`。您也可以修改该步骤为运行您实际想运行的 `yomo-source`。
-
-当您下载 [yomo-source-example](https://github.com/yomorun/yomo-source-example) 到本地之后，可以运行以下命令启动：
-
-```bash
-$ go run main.go
-2021/01/15 16:18:10 ✅ Connected to yomo-zipper localhost:9999
-2021/01/15 16:18:10 ✅ Emit 119.512955 to yomo-zipper
-2021/01/15 16:18:11 ✅ Emit 82.569893 to yomo-zipper
-2021/01/15 16:18:11 ✅ Emit 160.101456 to yomo-zipper
-2021/01/15 16:18:11 ✅ Emit 170.802765 to yomo-zipper
-2021/01/15 16:18:11 ✅ Emit 86.156288 to yomo-zipper
-2021/01/15 16:18:11 ✅ Emit 114.443230 to yomo-zipper
-2021/01/15 16:18:11 ✅ Emit 17.846315 to yomo-zipper
-2021/01/15 16:18:11 ✅ Emit 166.903183 to yomo-zipper
-```
-
-YoMo 还提供以下的示例：
-
-- [yomo-source-mqtt-broker-starter](https://github.com/yomorun/yomo-source-mqtt-broker-starter) 提供接收 `MQTT` 协议的消息并发送给 YoMo 的示例。如果您正在使用基于 `MQTT` 协议的 IoT 设备，您可以参考本示例简单方便的将 MQTT 消息数据当成 `yomo-source`。
-
-#### 5. yomo-zipper 接收数据并执行全流程实时计算
-
-```bash
-2021/01/15 16:04:52 ✅ Listening on 0.0.0.0:9999
-2021/01/15 16:18:10 ✅ Connect to Noise Serverless (localhost:4242) successfully.
-2021/01/15 16:18:11 ✅ Connect to Mock DB (localhost:4141) successfully.
-```
-
-### Optional: 设置 $GOPATH 和 $GOBIN
-
-针对当前 session：
-
-```bash
-export GOPATH=~/.go
-export PATH=$GOPATH/bin:$PATH
-```
-
-要永久设置这些变量，需要编辑 `.zshrc` 或 `.bashrc`：
-
-`zsh` 用户：
-
-```bash
-echo "export GOPATH=~/.go" >> .zshrc
-echo "path+=$GOPATH/bin" >> .zshrc
-```
-
-`bash` 用户：
-
-```bash
-echo 'export GOPATH=~/.go' >> .bashrc
-echo 'export PATH="$GOPATH/bin:$PATH"' >> ~/.bashrc
+save `18.71246` to FaunaDB
+save `1.0713108` to FaunaDB
+save `16.458117` to FaunaDB
+save `12.397432` to FaunaDB
+save `15.227814` to FaunaDB
+save `14.787642` to FaunaDB
+save `17.85902` to FaunaDB
 ```
