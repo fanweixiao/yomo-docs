@@ -1,6 +1,6 @@
 ---
 title: 硬件配置
-position: 6
+position: 100
 category: Overview
 ---
 
