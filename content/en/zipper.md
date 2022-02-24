@@ -42,7 +42,7 @@ To learn more about yaml, see [Learn X in Y minutes, where X=yaml](https://learn
 
 #### 1. Install YoMo CLI
 
-Please refer to the instructions [here](https://docs.yomo.run/).
+Please refer to the instructions [here](/).
 
 #### 2. Start `zipper`
 
@@ -68,6 +68,7 @@ yomo run ./stream-fn/app.go -n Noise
 2021/05/20 14:10:17 ✅ Connected to zipper localhost:9000
 2021/05/20 14:10:17 Running the Stream Function.
 ```
+
 #### 4. Start `stream-fn-db`
 
 ```bash

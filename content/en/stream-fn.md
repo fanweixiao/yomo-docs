@@ -41,21 +41,21 @@ func Handler(rxstream rx.Stream) rx.Stream {
 
 A few things to note:
 
-- The original stream sent by `zipper` is *immutable*. The `Handler` function operates on a stream by adding new items to the existing stream.
+- The original stream sent by `zipper` is _immutable_. The `Handler` function operates on a stream by adding new items to the existing stream.
 - The `Encode` operator is required in order to add items.
 
 ## Stream Operators
 
-Most operators take a stream as input and return a new stream as output, 
+Most operators take a stream as input and return a new stream as output,
 so they can be chained together. Some of the operators are implemented by ReactiveX:
 
 #### [Map](http://reactivex.io/documentation/operators/map.html) - applies a function to each item emitted by an Observable.
 
-![Map](/flow/map.png)
+![Map](/stream-fn/map.png)
 
 #### [TakeLast](http://reactivex.io/documentation/operators/takelast.html) - takes the last n items emitted by an Observable.
 
-![TakeLast](/flow/takeLast.png)
+![TakeLast](/stream-fn/takeLast.png)
 
 Some are unique to YoMo:
 

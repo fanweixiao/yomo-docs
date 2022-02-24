@@ -8,7 +8,7 @@ category: Examples
 
 ## Our customer's asked:
 
-Our client needs to perform a calculation in an environment where high frequency data generation occurs from multiple data sources. A calculation is only performed when data from all the sources have arrived. After calculation, the computed result is sent to the next processing session, and the whole process repeats. 
+Our client needs to perform a calculation in an environment where high frequency data generation occurs from multiple data sources. A calculation is only performed when data from all the sources have arrived. After calculation, the computed result is sent to the next processing session, and the whole process repeats.
 
 Traditionally, in a scenario where heterogenous data from multiple data sources is collected, developers face several issues related to multi-threading, concurrency, race, locking, cache, among other things. As a result, instead of abstraction and implementation, developers spend time fixing issues. YoMo solves that below:
 
@@ -36,10 +36,10 @@ func Handler(rxstream rx.Stream) rx.Stream {
 
 ## Code structure
 
-+ `source-data-a`: Analog data source A, sending random Float32 numbers [yomo.run/source](https://docs.yomo.run/source)
-+ `source-data-b`: Analog data source B, sending random Float32 numbers [yomo.run/source](https://docs.yomo.run/source)
-+ `stream-fn` (formerly flow): Combine simulated data sources A and B for calculation [yomo.run/stream-function](https://docs.yomo.run/stream-function)
-+ `zipper`: Setup a workflow that receives multiple sources and completes the merge calculation [yomo.run/zipper](https://docs.yomo.run/zipper)
+- `source-data-a`: Analog data source A, sending random Float32 numbers [yomo.run/source](/source)
+- `source-data-b`: Analog data source B, sending random Float32 numbers [yomo.run/source](/source)
+- `stream-fn` (formerly flow): Combine simulated data sources A and B for calculation [yomo.run/stream-fn](/stream-fn)
+- `zipper`: Setup a workflow that receives multiple sources and completes the merge calculation [yomo.run/zipper](/zipper)
 
 ## Implementation
 
@@ -117,8 +117,8 @@ $ go run main.go
 
 At this point, try to keep `Ctrl-C` dropping `source-data-a`, start it again after a while and see what happens to the `stream-fn` output
 
-### 7. Congratulations! 
+### 7. Congratulations!
 
-The problem has been solved in a simpler way than ever before! 
+The problem has been solved in a simpler way than ever before!
 
 Find [More YoMo Use Cases](https://github.com/yomorun/yomo)

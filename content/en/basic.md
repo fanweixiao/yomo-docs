@@ -10,10 +10,10 @@ This example represents how YoMo works with the mock data of sound sensor.
 
 ## Code structure
 
-+ `source`: Mocking data of a Noise Decibel Detection Sensor. [yomo.run/source](https://docs.yomo.run/source)
-+ `stream-fn` (formerly flow): Detecting noise pollution in real-time and print the warning message when it reaches the threshold. [yomo.run/stream-function](https://docs.yomo.run/stream-function)
-+ `stream-fn-db` (formerly sink): Demonstrating persistent storage for IoT data.
-+ `zipper`: Orchestrate a workflow that receives the data from `source`, stream computing in `stream-fn` [yomo.run/zipper](https://docs.yomo.run/zipper)
+- `source`: Mocking data of a Noise Decibel Detection Sensor. [yomo.run/source](/source)
+- `stream-fn` (formerly flow): Detecting noise pollution in real-time and print the warning message when it reaches the threshold. [yomo.run/stream-fn](/stream-fn)
+- `stream-fn-db` (formerly sink): Demonstrating persistent storage for IoT data.
+- `zipper`: Orchestrate a workflow that receives the data from `source`, stream computing in `stream-fn` [yomo.run/zipper](/zipper)
 
 ## How to run the example
 
@@ -21,7 +21,7 @@ This example represents how YoMo works with the mock data of sound sensor.
 
 Please visit [YoMo Getting Started](https://github.com/yomorun/yomo#1-install-cli) for details.
 
-### 2. Run [zipper](https://docs.yomo.run/zipper)
+### 2. Run [zipper](/zipper)
 
 ```bash
 yomo serve -c ./zipper/workflow.yaml
@@ -31,7 +31,7 @@ yomo serve -c ./zipper/workflow.yaml
 ℹ️   Running YoMo Zipper...
 ```
 
-### 3. Run [stream-function](https://docs.yomo.run/stream-function)
+### 3. Run [stream-function](/stream-fn)
 
 ```bash
 yomo run ./stream-fn/app.go -n Noise
@@ -72,7 +72,7 @@ go run ./stream-fn-via-go-cli/app.go
 2021/05/21 20:54:52 ✅ Connected to zipper localhost:9000
 ```
 
-### 4. Run [stream-fn-db](https://docs.yomo.run/stream-function)
+### 4. Run [stream-fn-db](/stream-fn)
 
 ```bash
 go run ./stream-fn-db/app.go -n MockDB
@@ -81,7 +81,7 @@ go run ./stream-fn-db/app.go -n MockDB
 2021/05/20 14:10:29 Running the Serverless Function.
 ```
 
-### 5. Run [yomo-source](https://docs.yomo.run/source)
+### 5. Run [yomo-source](/source)
 
 ```bash
 go run ./source/main.go

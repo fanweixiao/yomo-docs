@@ -42,9 +42,9 @@ func Handler(rxstream rx.RxStream) rx.RxStream {
 
 ## 代码结构
 
-+ `source`: 发送 5 个不同 key 的连续数字 [docs.yomo.run/source](https://docs.yomo.run/source)
-+ `flow`: 结合不同 key 的数字进行计算 [docs.yomo.run/flow](https://docs.yomo.run/flow)
-+ `zipper`: 设置一个工作流，接收多个 key 的数据并完成合并计算 [docs.yomo.run/zipper](https://docs.yomo.run/zipper)
+- `source`: 发送 5 个不同 key 的连续数字 [/source](/source)
+- `flow`: 结合不同 key 的数字进行计算 [/stream-fn](/stream-fn)
+- `zipper`: 设置一个工作流，接收多个 key 的数据并完成合并计算 [/zipper](/zipper)
 
 ## 如何运行这个例子
 
@@ -52,7 +52,7 @@ func Handler(rxstream rx.RxStream) rx.RxStream {
 
 请访问 [YoMo 入门](https://github.com/yomorun/yomo#1-install-cli)了解详情。
 
-### 2. 运行 [yomo-zipper](https://docs.yomo.run/zipper)
+### 2. 运行 [yomo-zipper](/zipper)
 
 ```bash
 yomo serve -c ./zipper/workflow.yaml
@@ -64,10 +64,10 @@ yomo serve -c ./zipper/workflow.yaml
 2021/05/20 15:34:23 ✅ Listening on 0.0.0.0:9000
 ```
 
-### 3. 运行 [yomo-flow](https://docs.yomo.run/flow)
+### 3. 运行 [yomo-flow](/stream-fn)
 
 ```bash
-yomo run ./flow/app.go -n training
+yomo run ./stream-fn/app.go -n training
 
 2021/05/20 15:35:22 Building the Serverless Function File...
 2021/05/20 15:35:25 Connecting to zipper localhost:9000 ...
@@ -75,7 +75,7 @@ yomo run ./flow/app.go -n training
 2021/05/20 15:35:25 Running the Serverless Function.
 ```
 
-### 4. 运行[yomo-source](https://docs.yomo.run/source)
+### 4. 运行[yomo-source](/source)
 
 ```bash
 go run ./source/main.go

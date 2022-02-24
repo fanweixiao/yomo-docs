@@ -57,7 +57,7 @@ $ yomo init yomo-app-demo
 
 ⌛  Initializing the Serverless app...
 ✅  Congratulations! You have initialized the serverless function successfully.
-ℹ️   You can enjoy the YoMo Serverless via the command: 
+ℹ️   You can enjoy the YoMo Serverless via the command:
 ℹ️   	DEV: 	yomo dev -n Noise yomo-app-demo/app.go
 ℹ️   	PROD: 	First run source application, eg: go run example/source/main.go
 		Second: yomo run -n yomo-app-demo yomo-app-demo/app.go
@@ -174,4 +174,4 @@ If you have any questions, please feel free to come to our [discussion board](ht
 
 [YoMo](https://github.com/yomorun/yomo) ❤️ [Vercel](https://vercel.com/?utm_source=yomorun&utm_campaign=oss) This website is
 
-[![Vercel Logo](https://docs.yomo.run/vercel.svg)](https://vercel.com/?utm_source=yomorun&utm_campaign=oss)
+[![Vercel Logo](/vercel.svg)](https://vercel.com/?utm_source=yomorun&utm_campaign=oss)
