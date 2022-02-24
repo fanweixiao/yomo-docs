@@ -56,7 +56,7 @@ $ cd ./example/multi-data-source/zipper
 
 $ yomo serve
 
-ℹ️   Found 1 stream functions in YoMo-Zipper config
+ℹ️   Found 1 stream function in YoMo-Zipper config
 ℹ️   Stream Function 1: training
 ℹ️   Running YoMo Zipper...
 2021/03/01 19:05:55 ✅ Listening on 0.0.0.0:9000

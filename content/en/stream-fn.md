@@ -1,5 +1,5 @@
 ---
-title: Stream Functions
+title: Stream Function
 position: 4
 category: Overview
 ---
