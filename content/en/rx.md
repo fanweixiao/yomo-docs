@@ -10,7 +10,7 @@ category: Overview
 
 Rx supports almost all the popular programming languages, YoMo uses [RxGo](https://github.com/ReactiveX/RxGo) and also adds some new `operators`. YoMo built atop [Functional Reactive Programming](https://en.wikipedia.org/wiki/Functional_reactive_programming) to reduce the complexity of `streaming computing`.
 
-![Rx](/stream-fn/rx.png)
+![Rx](/rx/rx.png)
 
 ## Why use Rx?
 

@@ -6,7 +6,18 @@ category: Overview
 
 YoMo is an open-source Streaming Serverless Framework for building low-latency edge computing applications. Built atop QUIC transport protocol and functional reactive programming interface, makes build geo-distributed system quickly. Used in Metaverse, real-time web applications, AR/VR, IoT etc.
 
-## Getting Started
+## 🌶 Features
+
+- ⚡️ **Low-latency** Guaranteed by implementing atop of [QUIC](https://datatracker.ietf.org/wg/quic/documents/)
+- 🔐 **Security** TLS v1.3 on every data packet by design
+- 📱 **5G/WiFi-6** Reliable networking in Celluar/Wireless
+- 🌎 **Geo-Distributed Edge Mesh** Edge-Mesh Native architecture makes your services close to end users
+- 📸 **Event-First** Architecture leverages serverless service to be event driven and elastic
+- 🦖 **Streaming Serverless** Write only a few lines of code to build applications and microservices
+- 🚀 **Y3** a [faster than real-time codec](https://github.com/yomorun/y3-codec-golang)
+- 📨 **Reactive** stream processing based on [Rx](http://reactivex.io/documentation/operators.html)
+
+## 🚀 Getting Started
 
 ### Prerequisite
 
@@ -140,9 +151,36 @@ $ yomo dev
 
 ```
 
-## Demo
+## 🌟 Show case
 
-![yomo-arch](/yomo-arch-v0.7.png)
+- [Metaverse Workplace frontend - Next.js v12](https://github.com/yomorun/yomo-metaverse-workplace-nextjs)
+- [Metaverse Workplace backend](https://github.com/yomorun/yomo-vhq-backend)
+
+## 📚 Examples
+
+All examples can be run by [Task](https://taskfile.dev), following the [Install Task](https://taskfile.dev/#/installation), execute `task -l` in this directory will list all the examples.
+
+```bash
+$ cd example
+$ task -l |grep example
+
+* example-basic: 			YoMo basic usage
+* example-pipeline: 			Unix pipeline to cloud
+* example-iopipe: 			IO Pipe
+* example-multi-sfn: 			Multiple stream functions
+* example-cascading-zipper: 		Cascading zippers
+```
+
+can run each example directly by `task example-basic`, `task example-cascading-zipper` and etc.
+
+- [0-basic](https://github.com/yomorun/yomo/tree/master/example/0-basic): process the streams from IoT sound sensor.
+- [1-pipeline](https://github.com/yomorun/yomo/tree/master/example/1-pipeline): read the local streams (f.e. `/dev/urandom`) and use [yomo-source](https://docs.yomo.run/source) to send the streams over cloud.
+- [2-iopipe](https://github.com/yomorun/yomo/tree/master/example/2-iopipe): use `io.Copy()` to pipe the local streams (f.e. `/dev/urandom`) to [yomo-source](https://docs.yomo.run/source).
+- [3-multi-sfn](https://github.com/yomorun/yomo/tree/master/example/3-multi-sfn): use 3 stream functions to process the streams in different cases.
+  - stream-fn-1: calculate the sound value in real-time.
+  - stream-fn-2: print the warning message when the sound value reaches a threshold.
+  - stream-fn-3: calculate the average value in a sliding window.
+- [4-cascading-zipper](https://github.com/yomorun/yomo/tree/master/example/4-cascading-zipper): [source](https://docs.yomo.run/source) connect to [zipper-1](https://docs.yomo.run/zipper), then [zipper-1](https://docs.yomo.run/zipper) will auto sync streams to the zippers in other regions.
 
 ## 🎯 Focuses on computing at the edge
 
@@ -153,7 +191,7 @@ YoMo is best for:
 - Handling continuous high-frequency data with stream processing.
 - Building complex systems with streaming serverless architecture.
 
-## Contributing
+## 🦸 Contributing
 
 First off, thank you for considering making contributions. It's people like you that make YoMo better. There are many ways in which you can participate in this project, for example:
 
@@ -162,7 +200,7 @@ First off, thank you for considering making contributions. It's people like you 
 - Read our [contributing guidelines](https://github.com/yomorun/yomo/blob/master/CONTRIBUTING.md) to learn about what types of contributions we are looking for.
 - We have also adopted a [code of conduct](https://github.com/yomorun/yomo/blob/master/CODE_OF_CONDUCT.md) that we expect project participants to adhere to.
 
-## Feedback
+## 🤹🏻‍♀️ Feedback
 
 If you have any questions, please feel free to come to our [discussion board](https://github.com/yomorun/yomo/discussions). Any feedback would be greatly appreciated!
 

@@ -51,11 +51,11 @@ so they can be chained together. Some of the operators are implemented by Reacti
 
 #### [Map](http://reactivex.io/documentation/operators/map.html) - applies a function to each item emitted by an Observable.
 
-![Map](/stream-fn/map.png)
+![Map](https://rxjs.dev/assets/images/marble-diagrams/map.png)
 
 #### [TakeLast](http://reactivex.io/documentation/operators/takelast.html) - takes the last n items emitted by an Observable.
 
-![TakeLast](/stream-fn/takeLast.png)
+![TakeLast](https://rxjs.dev/assets/images/marble-diagrams/takeLast.pngs)
 
 Some are unique to YoMo:
 
