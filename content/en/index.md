@@ -4,26 +4,26 @@ position: 1
 category: Overview
 ---
 
-YoMo is an open-source Streaming Serverless Framework for building low-latency edge computing applications. Built atop QUIC transport protocol and functional reactive programming interface, it makes real-time data processing reliable, secure, and easy.
+YoMo is an open-source Streaming Serverless Framework for building low-latency edge computing applications. Built atop QUIC transport protocol and functional reactive programming interface, makes build geo-distributed system quickly. Used in Metaverse, real-time web applications, AR/VR, IoT etc.
 
 ## Getting Started
 
-### Prerequisites
+### Prerequisite
 
 [Install Go](https://golang.org/doc/install)
 
 ### 1. Install CLI
 
-You can easily install the latest CLI release globally by running:
+#### Binary (Recommended)
 
-```sh
-go install github.com/yomorun/cli/yomo@latest
+```bash
+$ curl -fsSL "https://bina.egoist.sh/yomorun/cli?name=yomo" | sh
 ```
 
-Or you can install the CLI into a specified directory:
+#### Or build from source
 
-```sh
-env GOBIN=/bin go install github.com/yomorun/cli/yomo@latest
+```bash
+$ go install github.com/yomorun/cli/yomo@latest
 ```
 
 #### Verify Your YoMo CLI Installation
@@ -31,14 +31,14 @@ env GOBIN=/bin go install github.com/yomorun/cli/yomo@latest
 Use the following command to verify that the installation was successful:
 
 ```bash
-$ yomo -V
+$ yomo version
 ```
 
 <div>
 	<span><span style="font-weight:bold;">Quiz Time: </span>What do you see?</span>
 	<br>
     <input type="radio" name="x">
-	<label>YoMo CLI version: v0.0.3</label>
+	<label>YoMo CLI version: v0.1.7</label>
 	<span style="color:lightgreen;"> - You're good to go!</span>
 	<br>
 	<input type="radio" name="x">
@@ -72,51 +72,41 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
-	y3 "github.com/yomorun/y3-codec-golang"
-	"github.com/yomorun/yomo/pkg/rx"
+	"github.com/yomorun/yomo/rx"
 )
-
-// NoiseDataKey represents the Tag of a Y3 encoded data packet
-const NoiseDataKey = 0x10
 
 // NoiseData represents the structure of data
 type NoiseData struct {
-	Noise float32 `y3:"0x11"`
-	Time  int64   `y3:"0x12"`
-	From  string  `y3:"0x13"`
+	Noise float32 `json:"noise"` // Noise value
+	Time  int64   `json:"time"`  // Timestamp (ms)
+	From  string  `json:"from"`  // Source IP
 }
 
-var printer = func(_ context.Context, i interface{}) (interface{}, error) {
-	value := i.(NoiseData)
+var echo = func(_ context.Context, i interface{}) (interface{}, error) {
+	value := i.(*NoiseData)
+	value.Noise = value.Noise / 10
 	rightNow := time.Now().UnixNano() / int64(time.Millisecond)
 	fmt.Println(fmt.Sprintf("[%s] %d > value: %f ⚡️=%dms", value.From, value.Time, value.Noise, rightNow-value.Time))
 	return value.Noise, nil
 }
 
-var callback = func(v []byte) (interface{}, error) {
-	var mold NoiseData
-	err := y3.ToObject(v, &mold)
-	if err != nil {
-		return nil, err
-	}
-	mold.Noise = mold.Noise / 10
-	return mold, nil
-}
-
 // Handler will handle data in Rx way
-func Handler(rxstream rx.RxStream) rx.RxStream {
+func Handler(rxstream rx.Stream) rx.Stream {
 	stream := rxstream.
-		Subscribe(NoiseDataKey).
-		OnObserve(callback).
+		Unmarshal(json.Unmarshal, func() interface{} { return &NoiseData{} }).
 		Debounce(50).
-		Map(printer).
-		StdOut().
-		Encode(0x11)
+		Map(echo).
+		StdOut()
 
 	return stream
+}
+
+func DataID() []byte {
+	return []byte{0x33}
 }
 ```
 
