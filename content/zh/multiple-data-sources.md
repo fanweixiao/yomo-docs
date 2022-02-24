@@ -36,10 +36,10 @@ func Handler(rxstream rx.Stream) rx.Stream {
 
 ## 代码结构
 
-+ `source-data-a`: 模拟数据源 A，发送随机的 Float32 数字 [yomo.run/source](https://docs.yomo.run/source)
-+ `source-data-b`: 模拟数据源 B，发送随机的 Float32 数字 [yomo.run/source](https://docs.yomo.run/source)
-+ `stream-fn` (以前的flow)。结合模拟数据源 A 和 B 进行计算 [yomo.run/stream-fn](https://docs.yomo.run/stream-fn)
-+ `zipper`: 设置一个工作流，接收多个源并完成合并计算 [yomo.run/zipper](https://docs.yomo.run/zipper)
+- `source-data-a`: 模拟数据源 A，发送随机的 Float32 数字 [yomo.run/source](/source)
+- `source-data-b`: 模拟数据源 B，发送随机的 Float32 数字 [yomo.run/source](/source)
+- `stream-fn` (以前的 flow)。结合模拟数据源 A 和 B 进行计算 [yomo.run/stream-fn](/stream-fn)
+- `zipper`: 设置一个工作流，接收多个源并完成合并计算 [yomo.run/zipper](/zipper)
 
 ## 实施
 
@@ -119,6 +119,6 @@ $ go run main.go
 
 ### 7. Congrats!
 
-这个问题已经以一种比以前更简单的方式解决了! 
+这个问题已经以一种比以前更简单的方式解决了!
 
 查找[更多 YoMo 使用案例](https://github.com/yomorun/yomo)

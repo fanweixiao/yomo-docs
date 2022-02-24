@@ -10,10 +10,10 @@ category: Examples
 
 ## 代码结构
 
-+ `source`: 噪声传感器的模拟数据。[yomo.run/source](https://docs.yomo.run/source)
-+ `stream-fn` (以前的 flow): 实时检测噪声污染并在达到阈值时打印警告信息。[yomo.run/stream-function](https://docs.yomo.run/stream-function)
-+ `stream-fn-db` (以前的 sink): 展示物联网数据的持久性存储。
-+ `zipper`: 协调一个工作流，从 `source` 接收数据，在`stream-fn`进行流计算 [yomo.run/zipper](https://docs.yomo.run/zipper)
+- `source`: 噪声传感器的模拟数据。[yomo.run/source](/source)
+- `stream-fn` (以前的 flow): 实时检测噪声污染并在达到阈值时打印警告信息。[yomo.run/stream-fn](/stream-fn)
+- `stream-fn-db` (以前的 sink): 展示物联网数据的持久性存储。
+- `zipper`: 协调一个工作流，从 `source` 接收数据，在`stream-fn`进行流计算 [yomo.run/zipper](/zipper)
 
 ## 如何运行这个例子
 
@@ -21,7 +21,7 @@ category: Examples
 
 请访问 [YoMo 入门](https://github.com/yomorun/yomo#1-install-cli)了解详情。
 
-### 2. 运行 [zipper](https://docs.yomo.run/zipper)
+### 2. 运行 [zipper](/zipper)
 
 ```bash
 yomo serve -c ./zipper/workflow.yaml
@@ -31,7 +31,7 @@ yomo serve -c ./zipper/workflow.yaml
 ℹ️   Running YoMo Zipper...
 ```
 
-### 3. 运行 [stream-function](https://docs.yomo.run/stream-function)
+### 3. 运行 [stream-function](/stream-fn)
 
 ```bash
 yomo run ./stream-fn/app.go -n Noise
@@ -65,7 +65,7 @@ func main() {
 
 你可以在 `stream-fn-via-go-cli` 文件夹中找到这个例子。
 
-### 4. 运行 [stream-fn-db](https://docs.yomo.run/stream-function)
+### 4. 运行 [stream-fn-db](/stream-fn)
 
 ```bash
 go run ./stream-fn-db/app.go -n MockDB
@@ -74,7 +74,7 @@ go run ./stream-fn-db/app.go -n MockDB
 2021/05/20 14:10:29 Running the Serverless Function.
 ```
 
-### 5. 运行[yomo-source](https://docs.yomo.run/source)
+### 5. 运行[yomo-source](/source)
 
 ```bash
 go run ./source/main.go

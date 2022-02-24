@@ -10,7 +10,7 @@ category: Overview
 
 Rx supports almost all the popular programming languages, YoMo uses [RxGo](https://github.com/ReactiveX/RxGo) and also adds some new `operators`. YoMo built atop [Functional Reactive Programming](https://en.wikipedia.org/wiki/Functional_reactive_programming) to reduce the complexity of `streaming computing`.
 
-![Rx](/flow/rx.png)
+![Rx](/rx/rx.png)
 
 ## Why use Rx?
 
@@ -22,13 +22,13 @@ The ReactiveX (Rx) Observable model allows you to treat streams of asynchronous 
 getDataFromNetwork()
   .skip(10)
   .take(5)
-  .map((s) => s + ' transformed')
+  .map((s) => s + " transformed")
   .subscribe((it) => {
-    console.log('onNext => ' + it)
-  })
+    console.log("onNext => " + it);
+  });
 ```
 
-YoMo uses `QUIC` protocol to transfer data, and abstracts `QUIC Stream` into `RxStream` in [yomo-flow](/flow). It supports all operators provided by [RxGo](https://github.com/ReactiveX/RxGo) library, and adds several new operators for YoMo scenarios.
+YoMo uses `QUIC` protocol to transfer data, and abstracts `QUIC Stream` into `RxStream` in [yomo-flow](/stream-fn). It supports all operators provided by [RxGo](https://github.com/ReactiveX/RxGo) library, and adds several new operators for YoMo scenarios.
 
 ## Supported operators in RxStream
 

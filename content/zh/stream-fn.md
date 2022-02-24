@@ -1,5 +1,5 @@
 ---
-title: Stream Functions
+title: Stream Function
 position: 4
 category: Overview
 ---
@@ -8,7 +8,7 @@ category: Overview
 YoMo 采用 [函数式响应式编程 (FRP)](https://en.wikipedia.org/wiki/Functional_reactive_programming)，让流计算变得前所未有的简单。
 YoMo 使用 [QUIC 传输协议](https://en.wikipedia.org/wiki/QUIC)，
 很大程度上提高了数据传输的速度，并将 QUIC 流映射到 Rx 流。
-用户可以使用 [流操作符 (stream operators)](http://reactivex.io/documentation/operators.html)  来处理他们想要处理的流:
+用户可以使用 [流操作符 (stream operators)](http://reactivex.io/documentation/operators.html) 来处理他们想要处理的流:
 
 ```go
 func Handler(rxstream rx.Stream) rx.Stream {
@@ -49,11 +49,11 @@ func Handler(rxstream rx.Stream) rx.Stream {
 
 #### [Map](http://reactivex.io/documentation/operators/map.html) - 对 Observable 发出的每个数据 apply 一个函数。
 
-![Map](/flow/map.png)
+![Map](/stream-fn/map.png)
 
 #### [TakeLast](http://reactivex.io/documentation/operators/takelast.html) - 获取 Observable 发出的最后 n 个数据。
 
-![TakeLast](/flow/takeLast.png)
+![TakeLast](/stream-fn/takeLast.png)
 
 一些 operators 是 YoMo 独有的:
 

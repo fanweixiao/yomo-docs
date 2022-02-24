@@ -10,7 +10,7 @@ category: Overview
 
 Rx 库支持几乎全部的主流编程语言，YoMo 使用 [RxGo](https://github.com/ReactiveX/RxGo) 库，并添加了部分自定义 `operators`。YoMo 以 [Functional Reactive Programming](https://en.wikipedia.org/wiki/Functional_reactive_programming) 为编程范式，旨在降低面向 `streaming` 编程的难度。
 
-![Rx](/flow/rx.png)
+![Rx](/stream-fn/rx.png)
 
 ## 为什么使用 Rx？
 
@@ -22,13 +22,13 @@ Rx 库支持几乎全部的主流编程语言，YoMo 使用 [RxGo](https://githu
 getDataFromNetwork()
   .skip(10)
   .take(5)
-  .map((s) => s + ' transformed')
+  .map((s) => s + " transformed")
   .subscribe((it) => {
-    console.log('onNext => ' + it)
-  })
+    console.log("onNext => " + it);
+  });
 ```
 
-YoMo 全程使用 `QUIC` 协议传输数据，并在 [yomo-flow](/flow) 将 `QUIC Stream` 抽象为 `RxStream`，它支持 [RxGo](https://github.com/ReactiveX/RxGo) 库提供的所有 `operators`，并针对 YoMo 的场景添加了多个自定义 `operators`。
+YoMo 全程使用 `QUIC` 协议传输数据，并在 [yomo-flow](/stream-fn) 将 `QUIC Stream` 抽象为 `RxStream`，它支持 [RxGo](https://github.com/ReactiveX/RxGo) 库提供的所有 `operators`，并针对 YoMo 的场景添加了多个自定义 `operators`。
 
 ## RxStream 支持的 operators
 

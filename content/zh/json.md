@@ -8,7 +8,7 @@ category: Examples
 
 这个例子展示了如何在 YoMo 中使用 JSON Codec。
 
-1. 在 [source](https://docs.yomo.run/source) 中，使用 `json.Marshal(data)` 来通过 JSON 编码数据。
+1. 在 [source](/source) 中，使用 `json.Marshal(data)` 来通过 JSON 编码数据。
 
 ```go
 // Encode data via JSON.
@@ -18,7 +18,7 @@ sendingBuf, _ := json.Marshal(data)
 _, err := stream.Write(sendingBuf)
 ```
 
-2. 在 [stream-fn](https://docs.yomo.run/stream-function) 中，使用 `Unmarshal` 操作符通过 JSON 解码数据，然后使用 `Marshal` 操作符将数据编码返回到流。
+2. 在 [stream-fn](/stream-fn) 中，使用 `Unmarshal` 操作符通过 JSON 解码数据，然后使用 `Marshal` 操作符将数据编码返回到流。
 
 ```go
 func Handler(rxstream rx.Stream) rx.Stream {
@@ -37,19 +37,19 @@ func Handler(rxstream rx.Stream) rx.Stream {
 
 请访问 [YoMo 入门](https://github.com/yomorun/yomo#1-install-cli)了解详情。
 
-### 2. 运行 [YoMo-Zipper](https://docs.yomo.run/zipper)
+### 2. 运行 [YoMo-Zipper](/zipper)
 
 ```bash
 yomo serve -c ./zipper/workflow.yaml
 ```
 
-### 3. 运行 [Stream-Function](https://docs.yomo.run/stream-function)
+### 3. 运行 [Stream-Function](/stream-fn)
 
 ```bash
 yomo run ./stream-fn/app.go -n Noise
 ```
 
-### 4. 运行 [YoMo-Source](https://docs.yomo.run/source)
+### 4. 运行 [YoMo-Source](/source)
 
 ```bash
 go run ./source/main.go

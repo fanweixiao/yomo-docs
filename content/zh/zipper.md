@@ -40,7 +40,7 @@ functions:
 
 #### 1. 安装 YoMo CLI
 
-请参考 [说明](https://docs.yomo.run/)。
+请参考 [说明](/)。
 
 #### 2. 运行 `zipper`
 
@@ -66,6 +66,7 @@ yomo run ./stream-fn/app.go -n Noise
 2021/05/20 14:10:17 ✅ Connected to zipper localhost:9000
 2021/05/20 14:10:17 Running the Stream Function.
 ```
+
 #### 4. 运行 `stream-fn-db`
 
 ```bash
